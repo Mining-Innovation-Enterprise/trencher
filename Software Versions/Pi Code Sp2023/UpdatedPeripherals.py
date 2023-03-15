@@ -110,8 +110,12 @@ class LeadScrew()
         self.__targetSpeed = 40
         self.__currentSpeed = 40
         return
+  
+  self.__pi.hardware_PWM(13, 40, 500000) #sets speed to 40 hz if loop fails
       
-class Motor()i __dir = None
+      
+class Motor()
+  __dir = None
   __speed = None
   __pi = None
   __break = None
