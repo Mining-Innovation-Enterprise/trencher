@@ -34,9 +34,9 @@ def ControlLeadScrew(command, __pi):
         print("enabling leadscrew")
         leadScrew.enable()
     elif command.contents() == '=':
-        leadScrew.increaseSpeed(1000)
+        leadScrew.increaseSpeed(100)
     elif command.contents() == '-':
-        leadScrew.decreaseSpeed(1000)
+        leadScrew.decreaseSpeed(100)
     elif command.contents() == '1':
         leadScrew.setDirection()
     elif command.contents() == '2':
@@ -48,7 +48,7 @@ def ControlLeadScrew(command, __pi):
 
         m.setSpeed(153)
         leadScrew.setSpeed(0)
-        leadScrew.setSpeed(8400)
+        leadScrew.setSpeed(840)
 
 
 
