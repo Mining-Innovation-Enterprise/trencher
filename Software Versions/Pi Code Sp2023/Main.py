@@ -42,7 +42,7 @@ def ControlLeadScrew(command, __pi):
     elif command.contents() == '2':
 
         #sets direction to forward
-        __pi.write(25, 1)
+        __pi.write(12, 1)
         #enables motor
         __pi.write(24, 1)
 
