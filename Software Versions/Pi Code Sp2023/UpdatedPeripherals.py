@@ -40,25 +40,19 @@ class LeadScrew()
   def decreaseSpeed(self, amount):
     self.setSpeed(self.__currentSpeed - amount)
     
-  def __init__(self,pi, direction):
-    gpio.setup(19, gpio.IN)
-    gpio.setup(4, gpio.IN)
-  
-  def setDirection(self):
-    
-    if gpio.input(19) == True:
-      gpio.input(4, True)
-      self.__pi.hardware_PWM(12, 40, 500000) #40 Hz at 50% duty cycle
-      print("Moving Up")
-      self.__pi.write(self.__directionPin, 19)
-      return
-    
-    if gpio.input(4) == True:
-      gpio.input(19, False)
-      self.__pi.hardware_PWM(12, 40, 500000)
-      Print("Moving Down")
-      self.__pi.write(self.__directionPin, 4)
-      return
+    def setDirection(self):
+
+        if self.__pi.read(self.__directionPin) == 1:
+            self.__pi.hardware_PWM(12, 40, 500000)
+            print("Moving Up")
+            self.__pi.write(self.__directionPin, 0)
+            return
+
+        if self.__pi.read(self.__directionPin) == 0:
+            self.__pi.hardware_PWM(12, 40, 500000)
+            print("Moving Down")
+            self.__pi.write(self.__directionPin, 1)
+            return
     
     def getSpeed(self) -> int:
       return self.__currentSpeed
