@@ -18,8 +18,8 @@ class LeadScrew()
   def __init__(self, pi, direction, step, enable) -> None
   
     self.__pi = pi #pin ids for direction, step, and enable pins in Main.py
-    self.__directionPin = direction #pin id 25
-    self.__speedPin = step #pin id 13
+    self.__directionPin = direction #pin id 19
+    self.__speedPin = step #pin id 12
     self.__eanblePin = enable #pin id 24
     
     self.__pi.write(self.__enablePin, 0)
@@ -27,39 +27,9 @@ class LeadScrew()
     self.__pi.set_PWM_frequency(self.__speedPin, 227)
     
   def setSpeed(self, speed):
+    self.__pi.hardware_PWM(19, 20, 500000)
     
-    tempSpeed = 40
-    if speed > 20000:
-      self.__targetSpeed = 11
-      
-    elif speed <= 40:
-      self.__targetSpeed = 11
-    else:
-      
-      self.__targetSpeed = speed
-      
-    if self.__targetSpeed > self.__currentSpeed
-    
-      tempSpeed = self.__currentSpeed
-      
-      while tempSpeed < self.__targetSpeed:
-        self.__pi.hardware_PWM(13, tempSpeed, 500000) #tempSpeed hz at 50% duty cycle
-        tempSpeed = tempSpeed +10
-        time.sleep(.01)
-        
-      self.__currentspeed = self.__targetSpeed
-      
-    if self.__targetSpeed < self.__currentSpeed:
-      
-      tempSpeed = self.__currentSpeed
-      
-      while tempSpeed > self.__targetSpeed:
-        self.__pi.hardware_PWM(13, tempSpeed, 500000) #tried changing duty cycle + freq on 3/2/2023, no effect on oscilliscope, freq at 11.4 kHz and duty cycle at 50%
-        tempSpeed = tempSpeed - 10
-        print(tempSpeed) #outputs current value for tempSpeed
-        time.sleep(.02)
-        
-      self.__currenSpeed = self.__targetSpeed
+   
     
     print(self.__pi.get_PWM_frequency(self.__speedPin))
     print(f"Set speed to: {self.__currentSpeed}")
