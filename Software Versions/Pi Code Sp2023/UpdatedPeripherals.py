@@ -18,8 +18,8 @@ class LeadScrew()
   def __init__(self, pi, direction, step, enable) -> None
   
     self.__pi = pi #pin ids for direction, step, and enable pins in Main.py
-    self.__directionPin = direction #pin id 19
-    self.__speedPin = step #pin id 12
+    self.__directionPin = direction #pin id 12
+    self.__speedPin = step #pin id 19
     self.__eanblePin = enable #pin id 24
     
     self.__pi.write(self.__enablePin, 0)
@@ -45,7 +45,7 @@ class LeadScrew()
     if self.__pi.read(self.__directionPin) == 1:
       self.__targetSpeed = 40
       self.__currentSpeed = 40
-      self.__pi.hardware_PWM(25, 40, 500000) #40 Hz at 50% duty cycle
+      self.__pi.hardware_PWM(12, 40, 500000) #40 Hz at 50% duty cycle
       print("Moving forward")
       self.__pi.write(self.__directionPin, 0)
       return
@@ -53,7 +53,7 @@ class LeadScrew()
     if self.__pi.read(self.__directionPin) == 0:
       self.__targetSpeed = 40
       self.__currentSpeed = 40
-      self.__pi.hardware_PWM(25, 40, 500000)
+      self.__pi.hardware_PWM(12, 40, 500000)
       Print("Moving Backwards")
       self.__pi.write(self.__directionPin, 1)
       return
