@@ -42,13 +42,13 @@ class LeadScrew()
     
     def setDirection(self):
 
-        if self.__pi.read(self.__directionPin) == 1:
+        if self.__pi.read(self.__directionPin) == 1: #"1" is the same as GPIO.HIGH (forward)
             self.__pi.hardware_PWM(12, 40, 500000)
             print("Moving Up")
             self.__pi.write(self.__directionPin, 0)
             return
 
-        if self.__pi.read(self.__directionPin) == 0:
+        if self.__pi.read(self.__directionPin) == 0: #"2" is the same as GPIO.LOW (reverse)
             self.__pi.hardware_PWM(12, 40, 500000)
             print("Moving Down")
             self.__pi.write(self.__directionPin, 1)
