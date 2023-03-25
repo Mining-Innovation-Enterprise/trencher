@@ -41,17 +41,21 @@ class LeadScrew()
     self.setSpeed(self.__currentSpeed - amount)
     
     def setDirection(self):
+      
+        gpio.setup(4, gpio.IN)
+        gpio.setup(19, gpio.IN)
+        gpio.setup(12, gpio.OUT)
 
-        if self.__pi.read(self.__directionPin) == 1: #"1" is the same as GPIO.HIGH (forward)
+        if self.__pi.read(12) == 1:
+            self.__pi.write(12, 1) #"1" is the same as GPIO.HIGH (forward)
             self.__pi.hardware_PWM(12, 40, 500000)
             print("Moving Up")
-            self.__pi.write(self.__directionPin, 0)
             return
 
-        if self.__pi.read(self.__directionPin) == 0: #"2" is the same as GPIO.LOW (reverse)
+        if self.__pi.read(12) == 0:
+            self.__pi.write(12, 0) #"0" is the same as GPIO.LOW (reverse)
             self.__pi.hardware_PWM(12, 40, 500000)
             print("Moving Down")
-            self.__pi.write(self.__directionPin, 1)
             return
     
     def getSpeed(self) -> int:
