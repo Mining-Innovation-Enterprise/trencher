@@ -50,13 +50,13 @@ class LeadScrew()
         gpio.setup(19, gpio.IN)
         gpio.setup(12, gpio.OUT)
 
-        if self.__pi.read(12) == 1:
+        if self.__pi.read(4, 1) == 1:
             self.__pi.write(12, 1) #"1" is the same as GPIO.HIGH (forward)
             self.__pi.hardware_PWM(12, 40, 500000)
             print("Moving Up")
             return
 
-        if self.__pi.read(12) == 0:
+        if self.__pi.read(19, 1) == :
             self.__pi.write(12, 0) #"0" is the same as GPIO.LOW (reverse)
             self.__pi.hardware_PWM(12, 40, 500000)
             print("Moving Down")
