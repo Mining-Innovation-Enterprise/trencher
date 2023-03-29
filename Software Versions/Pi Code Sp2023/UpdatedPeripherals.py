@@ -30,7 +30,7 @@ class VMS()
       if self.__currentSpeed < 20
         self.__currentSpeed = self.__currentSpeed + 1 #technically this isn't a curve, but it will call the motor to accelerate more slowly
         self.__pi.hardware_PWM(19, self.__currentSpeed, 500000)
-        self.__sleep(.0125)
+        self.__sleep(.05)
       elif
         self.__pi.hardware_PWM(19, self.__currentSpeed, 500000)
    
