@@ -25,10 +25,10 @@ class LeadScrew()
     
     self.__pi.set_PWM_frequency(self.__speedPin, 227)
     
-  def setSpeed(self, speed):
+  def setSpeed(self, step):
     if self.__currentSpeed >= 0
       if self.__currentSpeed < 20
-        self.__currentSpeed = self.__currentSpeed + 1
+        self.__currentSpeed = self.__currentSpeed + 1 #technically this isn't a curve, but it will call the motor to accelerate more slowly
         self.__pi.hardware_PWM(19, self.__currentSpeed, 500000)
         self.__sleep(.0125)
       elif
@@ -50,13 +50,15 @@ class LeadScrew()
         gpio.setup(19, gpio.IN)
         gpio.setup(12, gpio.OUT)
 
-        if self.__pi.read(4, 1) == 1:
+         if self.__pi.read(19) == 0:
+          if self.__pi.read(4) == 1:
             self.__pi.write(12, 1) #"1" is the same as GPIO.HIGH (forward)
             self.__pi.hardware_PWM(12, 40, 500000)
             print("Moving Up")
             return
-
-        if self.__pi.read(19, 1) == :
+          
+        if self.__pi.read(4) == 0:
+          if self.__pi.read(19) == 1:
             self.__pi.write(12, 0) #"0" is the same as GPIO.LOW (reverse)
             self.__pi.hardware_PWM(12, 40, 500000)
             print("Moving Down")
