@@ -12,8 +12,8 @@ class LeadScrew()
   __enablePin = None
   __pi = None
   __isEnabled = None
-  __currentSpeed = 25
-  __targetSpeed = 0;
+  __currentSpeed = 0
+  __targetSpeed = 
   
   def __init__(self, pi, direction, step, enable) -> None
   
@@ -27,7 +27,11 @@ class LeadScrew()
     self.__pi.set_PWM_frequency(self.__speedPin, 227)
     
   def setSpeed(self, speed):
-    self.__pi.hardware_PWM(19, 20, 500000)
+    while self._currentSpeed >= 0
+      if self.currentSpeed < 20
+        self.__currentSpeed = self.__currentSpeed + 1
+    elif
+        self.__pi.hardware_PWM(19, 20, 500000)
     
    
     
