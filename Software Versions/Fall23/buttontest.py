@@ -1,0 +1,130 @@
+import os
+import time
+import pigpio
+from Peripherals import *
+
+pi = pigpio.pi()
+
+if not pi.connected:
+    print("not connected")
+    os.system("sudo pigpiod")
+    time.sleep(1)
+    pi = pigpio.pi()
+
+#****************************
+# Trencher motor controller pinout
+sv = 12 #PWM pin
+fr = 27 #non-PWM pin
+brk = 22 #non-PWM pin
+rpm = 17 #non-PWM pin
+trencher_Enable = 23
+#****************************
+
+led_green = 10
+led_yellow = 9
+
+x_plus = 6
+x_minus = 5
+
+z_plus = 4
+z_minus = 25
+
+t_plus = 16
+t_minus = 20
+
+x_motordrive_enable = 23
+z_motordrive_enable = 24
+
+x_step = 18
+x_direction = 17
+
+z_step = 19
+z_direction = 21
+
+pi.set_pull_up_down(20, pigpio.PUD_UP)
+
+pi.set_pull_up_down(z_minus, pigpio.PUD_UP)
+pi.set_pull_up_down(z_plus, pigpio.PUD_UP)
+
+pi.set_pull_up_down(16, pigpio.PUD_UP)
+
+pi.set_pull_up_down(x_plus, pigpio.PUD_UP)
+pi.set_pull_up_down(x_minus, pigpio.PUD_UP)
+
+pi.set_mode(4, pigpio.INPUT)
+pi.set_mode(20, pigpio.INPUT)
+pi.set_mode(25, pigpio.INPUT)
+pi.set_mode(16, pigpio.INPUT)
+
+pi.set_mode(x_plus, pigpio.INPUT)
+pi.set_mode(x_minus, pigpio.INPUT)
+
+pi.set_mode(z_plus, pigpio.INPUT)
+pi.set_mode(z_minus, pigpio.INPUT)
+
+pi.set_mode(t_plus, pigpio.INPUT)
+pi.set_mode(t_minus, pigpio.INPUT)
+
+pi.set_mode(x_motordrive_enable, pigpio.OUTPUT)
+pi.set_mode(z_motordrive_enable, pigpio.OUTPUT)
+
+pi.set_mode(x_step, pigpio.OUTPUT)
+pi.set_mode(x_direction, pigpio.OUTPUT)
+pi.set_mode(z_step, pigpio.OUTPUT)
+pi.set_mode(z_direction, pigpio.OUTPUT)
+
+pi.set_mode(led_green, pigpio.OUTPUT)
+pi.set_mode(led_yellow, pigpio.OUTPUT)
+
+pi.write(x_motordrive_enable, 0)
+pi.write(z_motordrive_enable, 0)
+
+pi.write(x_direction, 1)
+pi.write(z_plus, 1)
+pi.write(z_minus, 1)
+
+pi.write(led_green, 1)
+pi.write(led_yellow, 0)
+
+
+m = Motor(pi, sv, fr, brk)
+
+
+pi.hardware_PWM(x_step, 40000, 500000)
+pi.hardware_PWM(z_step, 40000, 500000)
+print(pi.get_PWM_frequency(x_step))
+print(pi.get_PWM_frequency(z_step))
+
+pi.write(brk, 1)
+pi.write(23, 1)
+
+while True:
+
+    if pi.read(x_plus) == 0:
+        pi.write(x_motordrive_enable, 1)
+        pi.write(x_direction, 1)
+        print("x_plus")
+    elif pi.read(x_minus) == 0:
+        pi.write(x_motordrive_enable, 1)
+        pi.write(x_direction, 0)
+        print("x_minus")
+    elif pi.read(z_plus) == 0:
+        pi.write(z_motordrive_enable, 1)
+        pi.write(z_direction, 1)
+        print("z_plus")
+    elif pi.read(z_minus) == 0:
+        pi.write(z_motordrive_enable, 1)
+        pi.write(z_direction, 0)
+        print("z_minus")
+    elif pi.read(t_plus) == 0:
+        m.reverse()
+        m.setSpeed(100)
+        print("t_plus")
+    elif pi.read(t_minus) == 0:
+        m.forward()
+        m.setSpeed(100)
+        print("t_minus")
+    else:
+        m.setSpeed(0)
+        pi.write(z_motordrive_enable, 0)
+        pi.write(x_motordrive_enable, 0)
