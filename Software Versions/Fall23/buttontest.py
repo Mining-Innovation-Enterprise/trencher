@@ -38,9 +38,11 @@ t_minus = 20
 x_motordrive_enable = 23
 z_motordrive_enable = 24
 
+# step is speed pin
 x_step = 18
 x_direction = 17
 
+# step = speed pin
 z_step = 19
 z_direction = 21
 
@@ -54,10 +56,12 @@ pi.set_pull_up_down(16, pigpio.PUD_UP)
 pi.set_pull_up_down(x_plus, pigpio.PUD_UP)
 pi.set_pull_up_down(x_minus, pigpio.PUD_UP)
 
+'''
 pi.set_mode(4, pigpio.INPUT)
 pi.set_mode(20, pigpio.INPUT)
 pi.set_mode(25, pigpio.INPUT)
 pi.set_mode(16, pigpio.INPUT)
+'''
 
 pi.set_mode(x_plus, pigpio.INPUT)
 pi.set_mode(x_minus, pigpio.INPUT)
@@ -79,9 +83,10 @@ pi.set_mode(z_direction, pigpio.OUTPUT)
 pi.set_mode(led_green, pigpio.OUTPUT)
 pi.set_mode(led_yellow, pigpio.OUTPUT)
 
+# sets no output, akin to setting defaults. 0 is no output
 pi.write(x_motordrive_enable, 0)
 pi.write(z_motordrive_enable, 0)
-
+# sets default to output
 pi.write(x_direction, 1)
 pi.write(z_plus, 1)
 pi.write(z_minus, 1)
@@ -89,9 +94,27 @@ pi.write(z_minus, 1)
 pi.write(led_green, 1)
 pi.write(led_yellow, 0)
 
-
+def set_motor_duty_cycle(motor, dc):
+    # sets the motor duty cycle
+    # takes the percentage and multiplies it to the full value
+    
+    if dc>= 0 | dc<= 1:
+        duty_cycle = dc*1000000
+        if motor =='vms':
+            pi.hardware_PWM(motor, vms_freq, duty_cycle)
+        elif motor =='gantry':
+            pi.hardware_PWM(motor, gantry_freq, duty_cycle)
+        else:
+            print('Incorrect motor name. valid names are : vms, gantry')
+    else:
+        print("Incorrect duty cycle. Please enter a value between in the range of 0 and 1")
+        
+    
 m = Motor(pi, sv, fr, brk)
 
+# sets the frequency and duty cycle for the gantry (x) and vms motors (z)
+gantry_freq = 40000
+vms_freq = 40000
 
 pi.hardware_PWM(x_step, 40000, 500000)
 pi.hardware_PWM(z_step, 40000, 500000)
