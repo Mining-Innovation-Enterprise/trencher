@@ -75,8 +75,10 @@ direction_pin = 25
 
 pi = pigpio.pi()
 speed = 0
+# controls the bucket ladder
 m = Motor(pi, sv, fr, brk)
 
+# controls Gantry and VMS motors
 leadScrew = LeadScrew(pi, direction_pin, step_pin, leadScrew_Enable)
 
 port = 3000
