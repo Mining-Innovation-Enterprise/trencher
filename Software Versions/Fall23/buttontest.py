@@ -23,12 +23,15 @@ trencher_Enable = 23
 led_green = 10
 led_yellow = 9
 
+# gantry buttons
 x_plus = 6
 x_minus = 5
 
+# vms buttons
 z_plus = 4
 z_minus = 25
 
+# bucket ladder directions
 t_plus = 16
 t_minus = 20
 
