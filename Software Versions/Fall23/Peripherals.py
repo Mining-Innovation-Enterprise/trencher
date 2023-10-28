@@ -20,6 +20,7 @@ class Motor():
         self.__currSpeed = 0
 
     def setSpeed(self, speed):
+        # sets PW duty cycle, and checks to see if within max-min range
         if speed > 400:
             self.__currSpeed = 400
         elif speed <= 0:
