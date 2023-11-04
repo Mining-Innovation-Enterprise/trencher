@@ -20,7 +20,7 @@ rpm = 17 #non-PWM pin
 trencher_Enable = 23
 #****************************
 
-led_green = 10
+led_green = 10 
 led_yellow = 9
 
 # gantry buttons
@@ -32,8 +32,8 @@ z_plus = 4
 z_minus = 25
 
 # bucket ladder directions
-t_plus = 16
-t_minus = 20
+t_plus = 16 #forward
+t_minus = 20 #backward
 
 x_motordrive_enable = 23
 z_motordrive_enable = 24
@@ -46,9 +46,9 @@ x_direction = 17
 z_step = 19
 z_direction = 21
 
-pi.set_pull_up_down(20, pigpio.PUD_UP)
+pi.set_pull_up_down(20, pigpio.PUD_UP) #backwards bucket ladder
 
-pi.set_pull_up_down(z_minus, pigpio.PUD_UP)
+pi.set_pull_up_down(z_minus, pigpio.PUD_UP) 
 pi.set_pull_up_down(z_plus, pigpio.PUD_UP)
 
 pi.set_pull_up_down(16, pigpio.PUD_UP)
