@@ -46,6 +46,8 @@ x_direction = 17
 z_step = 19
 z_direction = 21
 
+#pull-up pull down sets buttons to output/input, PUD up tells the program to check when the circuit going through the buttons is broken.
+
 pi.set_pull_up_down(20, pigpio.PUD_UP) #backwards bucket ladder
 pi.set_pull_up_down(16, pigpio.PUD_UP) #forwards bucket ladder
 
@@ -56,12 +58,14 @@ pi.set_pull_up_down(z_plus, pigpio.PUD_UP) #VMS up
 pi.set_pull_up_down(x_plus, pigpio.PUD_UP) #gantry right
 pi.set_pull_up_down(x_minus, pigpio.PUD_UP) #gantry left
 
-'''
-pi.set_mode(4, pigpio.INPUT)
+,,,
+pi.set_mode(4, pigpio.INPUT) 
 pi.set_mode(20, pigpio.INPUT)
 pi.set_mode(25, pigpio.INPUT)
-pi.set_mode(16, pigpio.INPUT)
-'''
+pi.set_mode(16, pigpio.INPUT) 
+,,,
+
+#pigpio.INPUT sets the program to read an input
 
 pi.set_mode(x_plus, pigpio.INPUT)
 pi.set_mode(x_minus, pigpio.INPUT)
@@ -71,6 +75,8 @@ pi.set_mode(z_minus, pigpio.INPUT)
 
 pi.set_mode(t_plus, pigpio.INPUT)
 pi.set_mode(t_minus, pigpio.INPUT)
+
+#pigpio.OUTPUT sets the program to output a signal
 
 pi.set_mode(x_motordrive_enable, pigpio.OUTPUT)
 pi.set_mode(z_motordrive_enable, pigpio.OUTPUT)
@@ -84,9 +90,12 @@ pi.set_mode(led_green, pigpio.OUTPUT)
 pi.set_mode(led_yellow, pigpio.OUTPUT)
 
 # sets no output, akin to setting defaults. 0 is no output
+
 pi.write(x_motordrive_enable, 0)
 pi.write(z_motordrive_enable, 0)
-# sets default to output
+
+# sets default to output. 1 is positive output
+
 pi.write(x_direction, 1)
 pi.write(z_plus, 1)
 pi.write(z_minus, 1)
