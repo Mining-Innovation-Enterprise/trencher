@@ -47,14 +47,14 @@ z_step = 19
 z_direction = 21
 
 pi.set_pull_up_down(20, pigpio.PUD_UP) #backwards bucket ladder
+pi.set_pull_up_down(16, pigpio.PUD_UP) #forwards bucket ladder
 
-pi.set_pull_up_down(z_minus, pigpio.PUD_UP) 
-pi.set_pull_up_down(z_plus, pigpio.PUD_UP)
+pi.set_pull_up_down(z_minus, pigpio.PUD_UP) #VMS down
+pi.set_pull_up_down(z_plus, pigpio.PUD_UP) #VMS up
 
-pi.set_pull_up_down(16, pigpio.PUD_UP)
 
-pi.set_pull_up_down(x_plus, pigpio.PUD_UP)
-pi.set_pull_up_down(x_minus, pigpio.PUD_UP)
+pi.set_pull_up_down(x_plus, pigpio.PUD_UP) #gantry right
+pi.set_pull_up_down(x_minus, pigpio.PUD_UP) #gantry left
 
 '''
 pi.set_mode(4, pigpio.INPUT)
