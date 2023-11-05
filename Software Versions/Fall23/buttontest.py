@@ -60,12 +60,10 @@ pi.set_pull_up_down(z_plus, pigpio.PUD_UP) #VMS up
 pi.set_pull_up_down(x_plus, pigpio.PUD_UP) #gantry right
 pi.set_pull_up_down(x_minus, pigpio.PUD_UP) #gantry left
 
-,,,
-pi.set_mode(4, pigpio.INPUT) 
-pi.set_mode(20, pigpio.INPUT)
-pi.set_mode(25, pigpio.INPUT)
-pi.set_mode(16, pigpio.INPUT) 
-,,,
+#pi.set_mode(4, pigpio.INPUT) 
+#pi.set_mode(20, pigpio.INPUT)
+#pi.set_mode(25, pigpio.INPUT)
+#pi.set_mode(16, pigpio.INPUT) 
 
 #pigpio.INPUT sets the program to read an input
 
