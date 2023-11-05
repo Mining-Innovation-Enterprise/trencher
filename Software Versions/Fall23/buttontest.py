@@ -147,16 +147,16 @@ pi.write(23, 1)
 while True:
 
     if pi.read(x_plus) == 0: # drives the gantry clockwise
-        # pi.write(x_motordrive_enable, 1)
-        # pi.write(x_direction, 1)
+        pi.write(x_motordrive_enable, 1)
+        pi.write(x_direction, 1)
         # uses the gantry_stepper object to tell the driver to accelerate the motor to the given speed in steps/sec
-        gantry_stepper.run(1, 0.3) 
+        #gantry_stepper.run(1, 0.3) 
         print("x_plus")
     elif pi.read(x_minus) == 0:# drives the gantry counterclockwise
-        # pi.write(x_motordrive_enable, 1)
-        # pi.write(x_direction, 0)
+        pi.write(x_motordrive_enable, 1)
+        pi.write(x_direction, 0)
         # uses the gantry_stepper object to tell the driver to accelerate the motor to the given speed in steps/sec
-        gantry_stepper.run(-1, 0.3) 
+        #gantry_stepper.run(-1, 0.3) 
         print("x_minus")
     elif pi.read(z_plus) == 0: # runs the vms clockwise
         # pi.write(z_motordrive_enable, 1)
