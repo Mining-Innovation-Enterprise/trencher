@@ -142,9 +142,14 @@ def accel_curve(value, motor):
             vms_freq = value*10
         pi.set_PWM_frequency(z_step, vms_freq)
 
+n = 0
+i = 0
+
 while True:
 
     if pi.read(x_plus) == 0: # drives the gantry clockwise
+        i+=1
+        accel_curve(i,'x')
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 1)
         # uses the gantry_stepper object to tell the driver to accelerate the motor to the given speed in steps/sec
