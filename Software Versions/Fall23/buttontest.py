@@ -106,8 +106,8 @@ pi.write(led_yellow, 0)
 m = Motor(pi, sv, fr, brk)
 
 # sets the frequency and duty cycle for the gantry (x) and vms motors (z)
-gantry_freq = 40000
-vms_freq = 40000
+gantry_freq = 0
+vms_freq = 0
 
 pi.hardware_PWM(x_step, 40000, 500000)
 pi.hardware_PWM(z_step, 40000, 500000)
@@ -121,14 +121,14 @@ pi.write(23, 1)
 
 def accel_curve(value, motor):
     if motor == 'x':
-        if value >= 80:
-            gantry_freq = 800
+        if value >= 800:
+            gantry_freq = 8000
         else:
             gantry_freq = value*10 
         pi.set_PWM_frequency(x_step, gantry_freq)
     elif motor == 'z':
-        if value >= 30:
-            vms_freq = 300
+        if value >= 300:
+            vms_freq = 3000
         else:
             vms_freq = value*10
         pi.set_PWM_frequency(z_step, vms_freq)
