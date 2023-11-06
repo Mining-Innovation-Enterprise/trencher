@@ -103,21 +103,6 @@ pi.write(z_minus, 1)
 pi.write(led_green, 1)
 pi.write(led_yellow, 0)
 
-def set_motor_duty_cycle(motor, dc):
-    # sets the motor duty cycle
-    # takes the percentage and multiplies it to the full value
-    
-    if dc>= 0 | dc<= 1:
-        duty_cycle = dc*1000000
-        if motor =='vms':
-            pi.hardware_PWM(motor, vms_freq, duty_cycle)
-        elif motor =='gantry':
-            pi.hardware_PWM(motor, gantry_freq, duty_cycle)
-        else:
-            print('Incorrect motor name. valid names are : vms, gantry')
-    else:
-        print("Incorrect duty cycle. Please enter a value between in the range of 0 and 1")
-
 # adding a motor driver object and stepper controller object for both the vms and gantry
 # sets the style of motor to be used and the respective step and direction pins
 
