@@ -136,8 +136,8 @@ def accel_curve(value, motor):
             gantry_freq = value*10 
         pi.set_PWM_frequency(x_step, gantry_freq)
     elif motor == 'z':
-        if value >= 120:
-            vms_freq = 1200
+        if value >= 30:
+            vms_freq = 300
         else:
             vms_freq = value*10
         pi.set_PWM_frequency(z_step, vms_freq)
