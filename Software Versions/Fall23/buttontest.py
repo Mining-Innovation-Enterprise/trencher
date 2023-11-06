@@ -144,7 +144,7 @@ while True:
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 1)
        
-        print("x_plus")
+        print("x_plus" + str(i) + str(gantry_freq))
     elif pi.read(x_minus) == 0:# drives the gantry counterclockwise
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 0)
