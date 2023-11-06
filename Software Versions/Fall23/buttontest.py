@@ -102,15 +102,6 @@ pi.write(z_minus, 1)
 
 pi.write(led_green, 1)
 pi.write(led_yellow, 0)
-
-# adding a motor driver object and stepper controller object for both the vms and gantry
-# sets the style of motor to be used and the respective step and direction pins
-
-vms_driver = apis.DriverStepDirGeneric(step_pin=z_step, dir_pin=z_direction)
-gantry_driver = apis.DriverStepDirGeneric(step_pin=x_step, dir_pin=x_direction)
-
-vms_stepper = apis.AdvPiStepper(vms_driver)
-gantry_stepper = apis.AdvPiStepper(gantry_driver)
     
 m = Motor(pi, sv, fr, brk)
 
@@ -152,26 +143,22 @@ while True:
         accel_curve(i,'x')
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 1)
-        # uses the gantry_stepper object to tell the driver to accelerate the motor to the given speed in steps/sec
-        #gantry_stepper.run(1, 0.3) 
+       
         print("x_plus")
     elif pi.read(x_minus) == 0:# drives the gantry counterclockwise
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 0)
-        # uses the gantry_stepper object to tell the driver to accelerate the motor to the given speed in steps/sec
-        #gantry_stepper.run(-1, 0.3) 
+        
         print("x_minus")
     elif pi.read(z_plus) == 0: # runs the vms clockwise
-        # pi.write(z_motordrive_enable, 1)
-        # pi.write(z_direction, 1)
-        # uses the gantry_stepper object to tell the driver to accelerate the motor to the given speed in steps/sec
-        vms_stepper.run(1, 0.3) 
+        pi.write(z_motordrive_enable, 1)
+        pi.write(z_direction, 1)
+        
         print("z_plus")
     elif pi.read(z_minus) == 0: # runs the vms counterclockwise
-        # pi.write(z_motordrive_enable, 1)
-        # pi.write(z_direction, 0)
-        # uses the gantry_stepper object to tell the driver to accelerate the motor to the given speed in steps/sec
-        vms_stepper.run(-1, 0.3)
+        pi.write(z_motordrive_enable, 1)
+        pi.write(z_direction, 0)
+        
         print("z_minus")
     elif pi.read(t_plus) == 0:
         m.reverse()
@@ -185,7 +172,6 @@ while True:
         m.setSpeed(0)
         pi.write(z_motordrive_enable, 0)
         pi.write(x_motordrive_enable, 0)
-        # vms_stepper.stop()
-        # gantry_stepper.stop()
+       
         i = 0
 
