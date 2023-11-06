@@ -106,6 +106,8 @@ pi.write(led_yellow, 0)
 m = Motor(pi, sv, fr, brk)
 
 # sets the frequency and duty cycle for the gantry (x) and vms motors (z)
+global gantry_freq
+global vms_freq
 gantry_freq = 0
 vms_freq = 0
 
