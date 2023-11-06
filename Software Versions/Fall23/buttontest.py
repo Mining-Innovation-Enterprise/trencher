@@ -130,8 +130,8 @@ pi.write(23, 1)
 
 def accel_curve(value, motor):
     if motor == 'x':
-        if value >= 180:
-            gantry_freq = 1800
+        if value >= 80:
+            gantry_freq = 800
         else:
             gantry_freq = value*10 
         pi.set_PWM_frequency(x_step, gantry_freq)
@@ -183,8 +183,9 @@ while True:
         print("t_minus")
     else:
         m.setSpeed(0)
-        # pi.write(z_motordrive_enable, 0)
-        # pi.write(x_motordrive_enable, 0)
-        vms_stepper.stop()
-        gantry_stepper.stop()
+        pi.write(z_motordrive_enable, 0)
+        pi.write(x_motordrive_enable, 0)
+        # vms_stepper.stop()
+        # gantry_stepper.stop()
+        i = 0
 
