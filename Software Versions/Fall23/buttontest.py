@@ -117,14 +117,24 @@ print(pi.get_PWM_frequency(z_step))
 pi.write(brk, 1)
 pi.write(23, 1)
 
+avail_freq = {1000:10, 2000:20, 4000: 40, 5000: 50, 8000:80, 10000:100, 16000:160, 20000:200, 25000:250, 32000:320, 40000:400, 
+             50000:500, 80000:800, 100000:1000, 160000:1600, 200000:2000, 400000:4000, 800000:8000}
 
+
+        
 
 def accel_curve(value, motor):
     if motor == 'x':
+        '''
         if value >= 800:
             gantry_freq = 8000
         else:
             gantry_freq = value*10 
+        '''
+        for key in avail_freq.keys():
+            if value == key:
+                gantry_freq = avail_freq[key]
+                
         pi.set_PWM_frequency(x_step, gantry_freq)
     elif motor == 'z':
         if value >= 300:
