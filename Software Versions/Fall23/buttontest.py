@@ -139,12 +139,12 @@ i = 0
 while True:
 
     if pi.read(x_plus) == 0: # drives the gantry clockwise
-        i+=1
+        i+=0.01
         accel_curve(i,'x')
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 1)
        
-        print("x_plus" + str(i) + str(gantry_freq))
+        print("x_plus" +' '+ str(i) + ' ' + str(gantry_freq))
     elif pi.read(x_minus) == 0:# drives the gantry counterclockwise
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 0)
