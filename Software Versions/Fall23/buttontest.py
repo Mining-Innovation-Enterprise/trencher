@@ -126,6 +126,7 @@ avail_freq = {1000:10, 2000:20, 4000: 40, 5000: 50, 8000:80, 10000:100, 16000:16
         
 
 def accel_curve(value, motor):
+    gantry_freq = 0
     if motor == 'x':
         '''
         if value >= 800:
