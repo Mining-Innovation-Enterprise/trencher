@@ -111,7 +111,6 @@ gantry_driver = apis.DriverStepDirGeneric(step_pin=x_step, dir_pin=x_direction)
 
 vms_stepper = apis.AdvPiStepper(vms_driver)
 gantry_stepper = apis.AdvPiStepper(gantry_driver)
-
     
 m = Motor(pi, sv, fr, brk)
 
@@ -126,6 +125,22 @@ print(pi.get_PWM_frequency(z_step))
 
 pi.write(brk, 1)
 pi.write(23, 1)
+
+
+
+def accel_curve(value, motor):
+    if motor == 'x':
+        if value >= 180:
+            gantry_freq = 1800
+        else:
+            gantry_freq = value*10 
+        pi.set_PWM_frequency(x_step, gantry_freq)
+    elif motor == 'z':
+        if value >= 120:
+            vms_freq = 1200
+        else:
+            vms_freq = value*10
+        pi.set_PWM_frequency(z_step, vms_freq)
 
 while True:
 
