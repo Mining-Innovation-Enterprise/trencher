@@ -158,23 +158,23 @@ while True:
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 1)
        
-        print(f"x_plus: {i} gantry frequency: {pi.get_PWM_frequency(x_step)}"))
+        print(f"x_plus: {i} gantry frequency: {pi.get_PWM_frequency(x_step)}")
         
     elif pi.read(x_minus) == 0:# drives the gantry counterclockwise
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 0)
         
-        print(f"x_minus: {i} gantry frequency: {pi.get_PWM_frequency(x_step)}"))
+        print(f"x_minus: {i} gantry frequency: {pi.get_PWM_frequency(x_step)}")
     elif pi.read(z_plus) == 0: # runs the vms clockwise
         pi.write(z_motordrive_enable, 1)
         pi.write(z_direction, 1)
         
-        print(f"z_plus: {i} vms frequency: {pi.get_PWM_frequency(z_step)}"))
+        print(f"z_plus: {i} vms frequency: {pi.get_PWM_frequency(z_step)}")
     elif pi.read(z_minus) == 0: # runs the vms counterclockwise
         pi.write(z_motordrive_enable, 1)
         pi.write(z_direction, 0)
         
-        print(f"z_minus: {i} vms frequency: {pi.get_PWM_frequency(z_step)}"))
+        print(f"z_minus: {i} vms frequency: {pi.get_PWM_frequency(z_step)}")
     elif pi.read(t_plus) == 0:
         m.reverse()
         m.setSpeed(100)
