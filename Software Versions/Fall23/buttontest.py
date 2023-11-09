@@ -111,8 +111,8 @@ global vms_freq
 gantry_freq = 0
 vms_freq = 0
 
-pi.hardware_PWM(x_step, 40000, 500000)
-pi.hardware_PWM(z_step, 40000, 500000)
+pi.hardware_PWM(x_step, 100, 500000)
+pi.hardware_PWM(z_step, 100, 500000)
 print(pi.get_PWM_frequency(x_step))
 print(pi.get_PWM_frequency(z_step))
 
@@ -153,11 +153,12 @@ while True:
 
     if pi.read(x_plus) == 0: # drives the gantry clockwise
         i+=0.01
-        accel_curve(i,'x')
+        #accel_curve(i,'x')
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 1)
        
-        print("x_plus" +' '+ str(i) + ' ' + str(gantry_freq))
+        print(f"x_plus: {i} gantry frequency: {pi.get_PWM_frequency(x_step)}"))
+        
     elif pi.read(x_minus) == 0:# drives the gantry counterclockwise
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 0)
