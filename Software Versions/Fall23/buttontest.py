@@ -128,12 +128,12 @@ avail_freq = {1000:10, 2000:20, 4000: 40, 5000: 50, 8000:80, 10000:100, 16000:16
 def accel_curve(value, motor):
     gantry_freq = 0
     if motor == 'x':
-        '''
+        
         if value >= 800:
             gantry_freq = 8000
         else:
             gantry_freq = value*10 
-        '''
+    
         for key in avail_freq.keys():
             if value == key:
                 gantry_freq = avail_freq[key]
