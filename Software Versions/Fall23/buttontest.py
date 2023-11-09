@@ -118,7 +118,7 @@ print(pi.get_PWM_frequency(z_step))
 
 pi.write(brk, 1)
 pi.write(23, 1)
-
+'''
 avail_freq = {1000:10, 2000:20, 4000: 40, 5000: 50, 8000:80, 10000:100, 16000:160, 20000:200, 25000:250, 32000:320, 40000:400, 
              50000:500, 80000:800, 100000:1000, 160000:1600, 200000:2000, 400000:4000, 800000:8000}
 
@@ -148,6 +148,7 @@ def accel_curve(value, motor):
 
 n = 0
 i = 0
+'''
 
 while True:
 
@@ -163,17 +164,17 @@ while True:
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 0)
         
-        print("x_minus")
+        print(f"x_minus: {i} gantry frequency: {pi.get_PWM_frequency(x_step)}"))
     elif pi.read(z_plus) == 0: # runs the vms clockwise
         pi.write(z_motordrive_enable, 1)
         pi.write(z_direction, 1)
         
-        print("z_plus")
+        print(f"z_plus: {i} vms frequency: {pi.get_PWM_frequency(z_step)}"))
     elif pi.read(z_minus) == 0: # runs the vms counterclockwise
         pi.write(z_motordrive_enable, 1)
         pi.write(z_direction, 0)
         
-        print("z_minus")
+        print(f"z_minus: {i} vms frequency: {pi.get_PWM_frequency(z_step)}"))
     elif pi.read(t_plus) == 0:
         m.reverse()
         m.setSpeed(100)
