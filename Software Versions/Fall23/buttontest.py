@@ -7,11 +7,11 @@ import advpistepper as apis
 
 pi = pigpio.pi()
 
-#os.system("sudo killall pigpiod")
+os.system("sudo killall pigpiod")
 
 if not pi.connected:
-    print("not connected")
-    os.system("sudo pigpiod")
+    #print("not connected")
+    os.system("sudo pigpiod -s2 -t0") #restarts the pigpio daemon, changes smapling rate to 2 and debugs waveform function
     time.sleep(1)
     pi = pigpio.pi()
 
