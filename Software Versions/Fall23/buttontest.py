@@ -48,10 +48,14 @@ x_direction = 17
 z_step = 19
 z_direction = 21
 
+#limit switches
+z_limit_top = 22
+z_limit_bot = 12
+
 #pull-up pull down sets buttons to output/input, PUD up tells the program to check when the circuit going through the buttons is broken.
 
-pi.set_pull_up_down(20, pigpio.PUD_UP) #backwards bucket ladder
-pi.set_pull_up_down(16, pigpio.PUD_UP) #forwards bucket ladder
+pi.set_pull_up_down(t_minus, pigpio.PUD_UP) #backwards bucket ladder
+pi.set_pull_up_down(t_plus, pigpio.PUD_UP) #forwards bucket ladder
 
 pi.set_pull_up_down(z_minus, pigpio.PUD_UP) #VMS down
 pi.set_pull_up_down(z_plus, pigpio.PUD_UP) #VMS up
