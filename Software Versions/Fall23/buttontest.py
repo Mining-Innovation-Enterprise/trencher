@@ -7,6 +7,8 @@ import advpistepper as apis
 
 pi = pigpio.pi()
 
+#os.system("sudo killall pigpiod")
+
 if not pi.connected:
     print("not connected")
     os.system("sudo pigpiod")
@@ -48,14 +50,10 @@ x_direction = 17
 z_step = 19
 z_direction = 21
 
-#limit switches
-z_limit_top = 22
-z_limit_bot = 12
-
 #pull-up pull down sets buttons to output/input, PUD up tells the program to check when the circuit going through the buttons is broken.
 
-pi.set_pull_up_down(t_minus, pigpio.PUD_UP) #backwards bucket ladder
-pi.set_pull_up_down(t_plus, pigpio.PUD_UP) #forwards bucket ladder
+pi.set_pull_up_down(20, pigpio.PUD_UP) #backwards bucket ladder
+pi.set_pull_up_down(16, pigpio.PUD_UP) #forwards bucket ladder
 
 pi.set_pull_up_down(z_minus, pigpio.PUD_UP) #VMS down
 pi.set_pull_up_down(z_plus, pigpio.PUD_UP) #VMS up
@@ -110,46 +108,94 @@ pi.write(led_yellow, 0)
 m = Motor(pi, sv, fr, brk)
 
 # sets the frequency and duty cycle for the gantry (x) and vms motors (z)
+global gantry_freq
+global vms_freq
+gantry_freq = 0
+vms_freq = 0
+
+#pi.hardware_PWM(x_step, 4000, 500000)
+#pi.hardware_PWM(z_step, 4000, 500000)
+#print(pi.get_PWM_frequency(x_step))
+#print(pi.get_PWM_frequency(z_step))
 
 pi.write(brk, 1)
 pi.write(23, 1)
 
 avail_freq = [100, 160, 200, 250, 320, 400, 500, 800, 1000, 1600, 2000, 4000, 8000]
 
-pi.set_PWM_dutycycle(z_step, 500000)
+#pi.set_PWM_dutycycle(z_step, 128)
 
-c = 0
-while c<12:
-    pi.set_PWM_frequency(z_step, avail_freq[c])
-    print(pi.get_PWM_frequency(z_step))
-    time.sleep(.1)
-    c+=1
 
-pi.set_PWM_frequency(step, 8000)
-print(pi.get_PWM_frequency(step))
+#c = 0
+#while c<12:
+    #pi.set_PWM_frequency(z_step, avail_freq[c])
+    #print(pi.get_PWM_frequency(z_step))
+    #time.sleep(.1)
+    #c+=1
+
+#pi.set_PWM_frequency(z_step, 8000)
+#print(pi.get_PWM_frequency(step))
+
         
+
+#def accel_curve(value, motor):
+    #gantry_freq = 0
+    #if motor == 'x':
+        
+        #if value >= 800:
+            #gantry_freq = 8000
+        #else:
+            #gantry_freq = value*10 
+    
+        #for key in avail_freq.keys():
+            #if value == key:
+                #gantry_freq = avail_freq[key]
+                
+        #pi.set_PWM_frequency(x_step, gantry_freq)
+    #elif motor == 'z':
+        #if value >= 300:
+            #vms_freq = 3000
+        #else:
+            #vms_freq = value*10
+        #pi.set_PWM_frequency(z_step, vms_freq)
+
+
+n = 0
+i = 0
 
 while True:
 
     if pi.read(x_plus) == 0: # drives the gantry clockwise
+        #i+=0.01
+        #if i > 200:
+            #pi.hardware_PWM(x_step, 100, 500000)
+        #accel_curve(i,'x')
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 1)
+        pi.set_PWM_dutycycle(x_step, 128)
+        pi.set_PWM_frequency(x_step, 10000)
        
         #print(f"x_plus: {i} gantry frequency: {pi.get_PWM_frequency(x_step)}")
         
     elif pi.read(x_minus) == 0:# drives the gantry counterclockwise
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 0)
+        pi.set_PWM_dutycycle(x_step, 128)
+        pi.set_PWM_frequency(x_step, 10000)
         
         #print(f"x_minus: {i} gantry frequency: {pi.get_PWM_frequency(x_step)}")
     elif pi.read(z_plus) == 0: # runs the vms clockwise
         pi.write(z_motordrive_enable, 1)
         pi.write(z_direction, 1)
+        pi.set_PWM_dutycycle(z_step, 128)
+        pi.set_PWM_frequency(z_step, 2500)
         
         #print(f"z_plus: {i} vms frequency: {pi.get_PWM_frequency(z_step)}")
     elif pi.read(z_minus) == 0: # runs the vms counterclockwise
         pi.write(z_motordrive_enable, 1)
         pi.write(z_direction, 0)
+        pi.set_PWM_dutycycle(z_step, 128)
+        pi.set_PWM_frequency(z_step, 2500)
         
         #print(f"z_minus: {i} vms frequency: {pi.get_PWM_frequency(z_step)}")
     elif pi.read(t_plus) == 0:
