@@ -71,14 +71,10 @@ pi.set_PWM_dutycycle(z_step, DUTY_CYCLE)
 print(pi.get_PWM_frequency(step))
 
 # main loop
-i = 0
 while True:
     m = Motor(pi, sv, fr, brk) # motor initialization
 
     if pi.read(x_plus) == 0: # drives gantry clockwise
-        i += 0.01 # does this loop work to accelerate the VMS as well?
-        if i > 200:
-            pi.hardware_PWM(x_step, 100, DUTY_CYCLE)
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 1)
     elif pi.read(x_minus) == 0: # drives gantry counterclockwise
