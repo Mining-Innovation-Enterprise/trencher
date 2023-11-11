@@ -4,8 +4,8 @@ import pigpio
 from Peripherals import *
 import advpistepper as apis
 
-# motor pin assignments. sv is PWM pin.
-sv, fr, brk, rpm, trencher_enable = 12, 27, 22, 17, 23
+# motor pin assignments.
+sv, fr, brk = 12, 27, 22 # sv is PWM
 led_green, led_yellow = 10, 9
 x_plus, x_minus, x_step, x_direction = 6, 5, 18, 17 # gantry pins
 z_plus, z_minus, z_step, z_direction = 4, 25, 19, 21 # VMS pins
