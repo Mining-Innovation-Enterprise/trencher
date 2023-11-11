@@ -31,10 +31,15 @@ if not pi.connected:
     time.sleep(1)
     pi = pigpio.pi()
 
-# set buttons to pull-up
-button_pins = [x_motor_pins, z_motor_pins, t_motor_pins, limit_upper, limit_lower]
-for pin in button_pins:
+# set pins to pull-up
+pull_up_pins = [x_motor_pins, z_motor_pins, t_motor_pins, x_direction, led_green] #include z_direction?
+for pin in pull_up_pins:
     pi.set_pull_up_down(pin, pigpio.PUD_UP)
+
+# set pins to pull-down
+pull_down_pins = [x_motordrive_enable, z_motordrive_enable, led_yellow, limit_upper, limit_lower]
+for pin in pull_down_pins:
+    pi.set_pull_up_down(pin, pigpio.PUD_DOWN)
 
 # set input pins
 input_pins = [x_motor_pins, z_motor_pins, t_motor_pins, limit_upper, limit_lower]
@@ -46,6 +51,7 @@ output_pins = [x_motordrive_enable, z_motordrive_enable, x_step, x_direction, z_
 for pin in output_pins:
     pi.set_mode(pin, pigpio.OUTPUT)
 
+'''
 # set initial states. 0 is no output, 1 is positive output
 initial_states = {
     x_motordrive_enable: 0,
@@ -58,6 +64,7 @@ initial_states = {
 }
 for pin, state in initial_states.items():
     pi.write(pin, state)
+'''
 
 # accelerates motor using predefined frequencies in GPIO library. 5 microsecond sampling rate.
 avail_freq = [100, 160, 200, 250, 320, 400, 500, 800, 1000, 1600, 2000, 4000, 8000]
@@ -82,13 +89,13 @@ while True:
             pi.write(x_motordrive_enable, 1)
             pi.write(x_direction, 0)
     elif pi.read(z_plus) == 0: # drive VMS clockwise
-        if limit_upper == 0: # if upper limit switch is active, skip
+        if limit_upper == 1: # if upper limit switch is active, skip
             pass
         else:
             pi.write(z_motordrive_enable, 1)
             pi.write(z_direction, 1)
     elif pi.read(z_minus) == 0: # drive VMS counterclockwise
-        if limit_lower == 0: # if lower limit switch is active, skip
+        if limit_lower == 1: # if lower limit switch is active, skip
             pass
         else:
             pi.write(z_motordrive_enable, 1)
