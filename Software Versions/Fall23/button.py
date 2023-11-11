@@ -7,6 +7,7 @@ import advpistepper as apis
 # motor pin assignments.
 sv, fr, brk = 12, 27, 22 # sv is PWM
 led_green, led_yellow = 10, 9
+limit_upper, limit_lower = 22, 12 # upper and lower limit switch pins
 x_plus, x_minus, x_step, x_direction = 6, 5, 18, 17 # gantry pins
 z_plus, z_minus, z_step, z_direction = 4, 25, 19, 21 # VMS pins
 t_plus, t_minus = 16, 20 # bucket ladder direction pins
@@ -31,12 +32,12 @@ if not pi.connected:
     pi = pigpio.pi()
 
 # set buttons to pull-up
-button_pins = [x_motor_pins, z_motor_pins, t_motor_pins]
+button_pins = [x_motor_pins, z_motor_pins, t_motor_pins, limit_upper, limit_lower]
 for pin in button_pins:
     pi.set_pull_up_down(pin, pigpio.PUD_UP)
 
 # set input pins
-input_pins = [x_motor_pins, z_motor_pins, t_motor_pins]
+input_pins = [x_motor_pins, z_motor_pins, t_motor_pins, limit_upper, limit_lower]
 for pin in input_pins:
     pi.set_mode(pin, pigpio.INPUT)
 
@@ -75,17 +76,23 @@ while True:
     m = Motor(pi, sv, fr, brk) # motor initialization
 
     if pi.read(x_plus) == 0: # drives gantry clockwise
-        pi.write(x_motordrive_enable, 1)
-        pi.write(x_direction, 1)
+            pi.write(x_motordrive_enable, 1)
+            pi.write(x_direction, 1)
     elif pi.read(x_minus) == 0: # drives gantry counterclockwise
-        pi.write(x_motordrive_enable, 1)
-        pi.write(x_direction, 0)
+            pi.write(x_motordrive_enable, 1)
+            pi.write(x_direction, 0)
     elif pi.read(z_plus) == 0: # drive VMS clockwise
-        pi.write(z_motordrive_enable, 1)
-        pi.write(z_direction, 1)
+        if limit_upper == 0: # if upper limit switch is active, skip
+            pass
+        else:
+            pi.write(z_motordrive_enable, 1)
+            pi.write(z_direction, 1)
     elif pi.read(z_minus) == 0: # drive VMS counterclockwise
-        pi.write(z_motordrive_enable, 1)
-        pi.write(z_direction, 0)
+        if limit_lower == 0: # if lower limit switch is active, skip
+            pass
+        else:
+            pi.write(z_motordrive_enable, 1)
+            pi.write(z_direction, 0)
     elif pi.read(t_plus) == 0: # drive bucket ladder clockwise
         m.reverse()
         m.setSpeed(100)
