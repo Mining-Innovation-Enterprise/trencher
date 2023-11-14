@@ -118,7 +118,7 @@ vms_freq = 0
 #print(pi.get_PWM_frequency(x_step))
 #print(pi.get_PWM_frequency(z_step))
 
-pi.write(brk, 1)
+pi.write(brk, 1) # tried to comment this out, no change was observed
 pi.write(23, 1)
 
 avail_freq = [100, 160, 200, 250, 320, 400, 500, 800, 1000, 1600, 2000, 4000, 8000]
