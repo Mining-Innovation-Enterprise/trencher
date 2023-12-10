@@ -54,9 +54,9 @@ z_direction = 21
 
 pi.set_pull_up_down(20, pigpio.PUD_UP) #backwards bucket ladder
  #forwards bucket ladder
-pi.set_mode(22, pigpio.OUTPUT)
-pi.set_mode(12, pigpio.OUTPUT)
-pi.set_mode(27, pigpio.OUTPUT)
+pi.set_mode(22, pigpio.OUTPUT) #sets up enable pin for output
+pi.set_mode(12, pigpio.OUTPUT) #sets up speed pin for output
+pi.set_mode(27, pigpio.OUTPUT) #sets up direction pin for output
 
 pi.set_pull_up_down(z_minus, pigpio.PUD_UP) #VMS down
 pi.set_pull_up_down(z_plus, pigpio.PUD_UP) #VMS up
@@ -127,8 +127,8 @@ m = Motor(pi, sv, fr, brk)
 #gantry_freq = 0
 #vms_freq = 0
 
-pi.write(brk, 0) # tried to comment this out, no change was observed
-#pi.write(23, 1)
+pi.write(brk, 0) #switched bucket ladder to run high
+#pi.write(23, 1) #gantry pin was spamming on electronic saloon
 
 avail_freq = [100, 160, 200, 250, 320, 400, 500, 800, 1000, 1600, 2000, 4000, 8000]
 
@@ -174,8 +174,8 @@ i = 0
 
 while True:
 
-    speed = 0
-    duty = 0
+    speed = 0 #variable for frequency for BLDC
+    duty = 0 #variable for duty cycle for BLDC
     print(f"BLDC Speed: {(speed)}")
     print(f"BLDC Duty: {(duty)}")
     #print(f"Enable:")
@@ -224,7 +224,7 @@ while True:
         pi.write(22, 1)
         speed = speed + 500
         duty = duty + 128
-        pi.set_PWM_frequency(12, speed)
+        pi.set_PWM_frequency(12, speed) #12 is the only PWM pin, so iy needs this function rather than just writing
         pi.set_PWM_dutycycle(12, duty)
         pi.write(fr, 1)
         print(f"Duty:{(duty)}")
