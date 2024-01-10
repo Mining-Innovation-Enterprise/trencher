@@ -1,7 +1,6 @@
 import os
 import time
 import pigpio
-import advpistepper as apis
 from peripherals import *
 
 # motor pin assignments
