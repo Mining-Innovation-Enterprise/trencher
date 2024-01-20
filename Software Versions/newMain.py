@@ -79,7 +79,7 @@ pi.set_PWM_dutycycle(z_step, DUTY_CYCLE)
 '''
 
 class Motor:
-    def __init__(self, pi, sv, fr, brk):
+    def __init__(self, pi, sv, fr):
         self.__pi = pi
         self.__speed = sv
         self.__dir = fr # does this need to be set to pull up?
