@@ -20,8 +20,8 @@ t_motor_pins = [t_plus, t_minus]
 
 # constants
 # should be gantry and vms freq/duty instead? use these in doc commented code?
-MAX_FREQUENCY = 8000 # VMS and gantry have different max freqs
-DUTY_CYCLE = 500000 # 128 instead of 500k? if 500k, is that because of the advpistepper library?
+MAX_FREQUENCY = 8000 # VMS and gantry have different max freqs?
+DUTY_CYCLE = 128
 
 # connect to pigpio
 pi = pigpio.pi()
@@ -70,23 +70,19 @@ for frequency in avail_freq:
     print(pi.get_PWM_frequency(z_step))
     time.sleep(0.1) # is this the best delay between loops? does it matter?
 
-''' 
 # set PWM frequency and duty cycle for x_step and z_step
 pi.set_PWM_frequency(x_step, MAX_FREQUENCY)
 pi.set_PWM_dutycycle(x_step, DUTY_CYCLE)
 pi.set_PWM_frequency(z_step, MAX_FREQUENCY)
 pi.set_PWM_dutycycle(z_step, DUTY_CYCLE)
-'''
 
 class Motor:
     def __init__(self, pi, sv, fr):
         self.__pi = pi
         self.__speed = sv
         self.__dir = fr # does this need to be set to pull up?
-        self.__brake = brk # is brake even needed? isn't this techincally the gantry enable pin?
         self.__pi.set_mode(self.__dir, pigpio.OUTPUT)
         self.__pi.set_mode(self.__speed, pigpio.OUTPUT)
-        self.__pi.set_mode(self.__brake, pigpio.OUTPUT) # including this line
         self.__curr_speed = 0
 
     def set_speed(self, speed):
@@ -110,13 +106,15 @@ class Motor:
     def reverse(self):
         self.__pi.write(self.__dir, 1)
 
-    def hard_stop(self): # not used; planning to?
-        curr = self.__pi.read(self.__brake)
-        self.__pi.write(self.__brake, curr ^ 1)
-
 # main loop
 while True:
     m = Motor(pi, sv, fr) # motor initialization
+
+    # print statements for reading current values from TV screen
+    print("GANTRY FREQ: " + pi.get_PWM_frequency(x_step))
+    print("GANTRY FREQ: " + pi.get_PWM_dutycycle(x_step))
+    print("VMS FREQ: " + pi.get_PWM_frequency(z_step))
+    print("VMS FREQ: " + pi.get_PWM_dutycycle(z_step))
 
     if pi.read(x_plus) == 0: # drives gantry clockwise
         pi.write(x_motordrive_enable, 1)
