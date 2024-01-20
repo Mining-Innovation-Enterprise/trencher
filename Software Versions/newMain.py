@@ -34,17 +34,17 @@ if not pi.connected:
 
 # set buttons to pull-up
 # should we pull-up or down? is down safer?
-button_pins = [6, 5, 4, 25, 16, 20]
+button_pins = x_motor_pins + z_motor_pins + t_motor_pins
 for pin in button_pins:
     pi.set_pull_up_down(pin, pigpio.PUD_UP)
 
 # set input pins
-input_pins = [x_motor_pins, z_motor_pins, t_motor_pins]
+input_pins = x_motor_pins + z_motor_pins + t_motor_pins
 for pin in input_pins:
     pi.set_mode(pin, pigpio.INPUT)
 
 # set output pins
-output_pins = [x_motordrive_enable, z_motordrive_enable, x_step, x_direction, z_step, z_direction, led_green, led_yellow]
+output_pins = x_motordrive_enable + z_motordrive_enable + x_step + x_direction + z_step + z_direction + led_green + led_yellow
 for pin in output_pins:
     pi.set_mode(pin, pigpio.OUTPUT)
 
