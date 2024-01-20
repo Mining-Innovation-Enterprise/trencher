@@ -34,7 +34,7 @@ if not pi.connected:
 
 # set buttons to pull-up
 # should we pull-up or down? is down safer?
-button_pins = [x_motor_pins, z_motor_pins, t_motor_pins]
+button_pins = [6, 5, 4, 25, 16, 20]
 for pin in button_pins:
     pi.set_pull_up_down(pin, pigpio.PUD_UP)
 
