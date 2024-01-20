@@ -44,7 +44,7 @@ for pin in input_pins:
     pi.set_mode(pin, pigpio.INPUT)
 
 # set output pins
-output_pins = x_motordrive_enable + z_motordrive_enable + x_step + x_direction + z_step + z_direction + led_green + led_yellow
+output_pins = [x_motordrive_enable, z_motordrive_enable, x_step, x_direction, z_step, z_direction, led_green, led_yellow]
 for pin in output_pins:
     pi.set_mode(pin, pigpio.OUTPUT)
 
