@@ -188,7 +188,7 @@ while True:
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 1)
         pi.set_PWM_dutycycle(x_step, 128)
-        pi.set_PWM_frequency(x_step, 10000)
+        pi.set_PWM_frequency(x_step, 1000)
 
        
         #print(f"x_plus: {i} gantry frequency: {pi.get_PWM_frequency(x_step)}")
@@ -197,7 +197,7 @@ while True:
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 0)
         pi.set_PWM_dutycycle(x_step, 128)
-        pi.set_PWM_frequency(x_step, 10000)
+        pi.set_PWM_frequency(x_step, 1000)
 
     else:
         pi.write(x_motordrive_enable, 0)
