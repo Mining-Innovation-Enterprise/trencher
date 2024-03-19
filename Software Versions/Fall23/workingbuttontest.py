@@ -172,6 +172,7 @@ avail_freq = [100, 160, 200, 250, 320, 400, 500, 800, 1000, 1600, 2000, 4000, 80
 n = 0
 i = 0
 
+#code below starts the infinite loop which allows all three devices to run (gantry, bucket ladder, VMS)
 while True:
 
     speed = 0 #variable for frequency for BLDC
@@ -180,6 +181,7 @@ while True:
     print(f"BLDC Duty: {(duty)}")
     #print(f"Enable:")
 
+    #code for the gantry starts below and runs from lines 185-207
     if pi.read(x_plus) == 0: # drives the gantry clockwise
         #i+=0.01
         #if i > 200:
@@ -203,6 +205,8 @@ while True:
         pi.write(x_motordrive_enable, 0)
         
         #print(f"x_minus: {i} gantry frequency: {pi.get_PWM_frequency(x_step)}")
+    
+    #code for the VMS starts below and runs from lines 210-226
     if pi.read(z_plus) == 0: # runs the vms clockwise
         pi.write(z_motordrive_enable, 1)
         pi.write(z_direction, 1)
@@ -220,6 +224,8 @@ while True:
         pi.write(z_motordrive_enable, 0)
         
         #print(f"z_minus: {i} vms frequency: {pi.get_PWM_frequency(z_step)}")
+
+    #code for the bucekt ladder starts below and runs from lines 229-255
     if pi.read(t_plus) == 0:
         pi.write(22, 1)
         speed = speed + 500
