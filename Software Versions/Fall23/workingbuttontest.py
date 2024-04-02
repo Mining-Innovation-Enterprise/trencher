@@ -171,6 +171,8 @@ avail_freq = [100, 160, 200, 250, 320, 400, 500, 800, 1000, 1600, 2000, 4000, 80
 
 n = 0
 i = 0
+#switch1 = False
+#switch2 = False
 
 #code below starts the infinite loop which allows all three devices to run (gantry, bucket ladder, VMS)
 while True:
@@ -254,4 +256,12 @@ while True:
         m.setSpeed(0)
         pi.write(22, 0)
 
+    #if switch 1 is set to true
+        #do the instructions for bucket ladder
+        #Either go backwards or forwards depending on which button is pressed
+    #if switch 2 is set to true
+        #do the instructions for the gantry
+        #Either go left or right depending on which button is pressed
 
+    #Pseudocode for this since I still don't fully understand if I understand
+    #The switch logic correctly
