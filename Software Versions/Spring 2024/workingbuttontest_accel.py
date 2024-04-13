@@ -149,9 +149,16 @@ def accel_curve(value, motor): # ramps up the gantry motor speed to 2500
               gantry_freq = avail_freq[z]
               #print(z)
               return gantry_freq
-
-
-
+                
+# potential solution for accel_curve function?
+'''
+    # available frequncies for 2 uS, change if the sampling rate changes
+    avail_freq = [250, 400, 500, 625, 800, 1000]
+    for frequency in avail_freq:
+        pi.set_PWM_frequency(x_step, frequency)
+        print(pi.get_PWM_frequency(x_step))
+        time.sleep(0.1)
+'''
 
 
 n = 0
@@ -167,6 +174,20 @@ while True:
     print(f"BLDC Duty: {(duty)}")
     #print(f"Enable:")
 
+    # potential solution for lower if statement?
+    '''
+        if pi.read(x_plus) == 0: # drives the gantry clockwise
+        pi.write(x_motordrive_enable, 1)
+        pi.write(x_direction, 1)
+        if(pi.get_PWM_frequency(x_step) < avail_freq[len(avail_freq) - 1]):
+            accel_curve()
+        else:
+            pi.set_PWM_dutycycle(x_step, 128) # 50% duty cycle
+            pi.set_PWM_frequency(x_step, avail_freq[len(avail_freq) - 1]) # max freq in avail_freq
+        print(f'Frequency: {pi.get_PWM_frequency((x_step))}')
+    '''
+
+    
     if pi.read(x_plus) == 0: # drives the gantry clockwise
         i+=1
         x_freq = accel_curve(i,'x')
