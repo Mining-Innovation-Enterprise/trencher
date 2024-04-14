@@ -131,8 +131,9 @@ m = Motor(pi, sv, fr, brk)
 pi.write(brk, 0) #switched bucket ladder to run high
 #pi.write(23, 1) #gantry pin was spamming on electronic saloon
 
-avail_freq = [100, 160, 200, 250, 320, 400, 500, 800, 1000, 1600, 2000, 4000, 8000]
 
+avail_freq = [250, 400, 500, 625, 800, 1000] # array for desired frequencies. Set to 2us sample rate frequencies
+# if using hardware_PWM() then set the frequencies to anything below 30MHz
 def accel_curve(value, motor): # ramps up the gantry motor speed to 2500
     #gantry_freq = 0
 
@@ -152,11 +153,13 @@ def accel_curve(value, motor): # ramps up the gantry motor speed to 2500
                 
 # potential solution for accel_curve function?
 '''
+def accel_curve():
     # available frequncies for 2 uS, change if the sampling rate changes
     avail_freq = [250, 400, 500, 625, 800, 1000]
     for frequency in avail_freq:
         pi.set_PWM_frequency(x_step, frequency)
         print(pi.get_PWM_frequency(x_step))
+        # pi.hardware_PWM(x_step, frequency, 1000000/2) # Will try using the hardware PWM signal. If it works then change frequencies at will.
         time.sleep(0.1)
 '''
 
@@ -176,14 +179,16 @@ while True:
 
     # potential solution for lower if statement?
     '''
-        if pi.read(x_plus) == 0: # drives the gantry clockwise
+    if pi.read(x_plus) == 0: # drives the gantry clockwise
         pi.write(x_motordrive_enable, 1)
         pi.write(x_direction, 1)
+        pi.set_PWM_dutycycle(x_step,128)
         if(pi.get_PWM_frequency(x_step) < avail_freq[len(avail_freq) - 1]):
             accel_curve()
         else:
             pi.set_PWM_dutycycle(x_step, 128) # 50% duty cycle
             pi.set_PWM_frequency(x_step, avail_freq[len(avail_freq) - 1]) # max freq in avail_freq
+            # pi.hardware_PWM(x_step, avail_freq[len(avail_freq) - 1], 1000000/2) # Will try using the hardware PWM signal. If it works then change frequencies at will.
         print(f'Frequency: {pi.get_PWM_frequency((x_step))}')
     '''
 
