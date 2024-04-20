@@ -9,6 +9,10 @@ pi = pigpio.pi()
 
 os.system("sudo killall pigpiod")
 
+# I'm assuming it's somewhere inside peripherals, I just don't know where though
+if pi.read(shutdown_button) == 0:  # The button should have some sort of input, not sure what file the code is in for the kill button.
+    os.system("sudo shutdown now, killall pigpiod")
+
 if not pi.connected:
     #print("not connected")
     os.system("sudo pigpiod -s2 -t0") #restarts the pigpio daemon, changes smapling rate to 2 and debugs waveform function
